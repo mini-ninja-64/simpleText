@@ -7,7 +7,7 @@ int textCanvas::init(std::string file){
 	doccursor[1] = 0;
 	init_pair(1, COLOR_WHITE, COLOR_CYAN);
 	init_pair(2, COLOR_BLUE, COLOR_WHITE);
-	status = "Simple Text Editor 1.00";
+	status = "Simple Text Editor 1.00" + file;
 	tBuffer.init(file);
 	startLine = 0;
 }
@@ -75,14 +75,14 @@ void textCanvas::handleInput(WINDOW * win, int c){
 
 	char keyAsChar = (char)c;
 
-	if ((c >= 33) && (c <= 126)){
+	if ((c >= 32) && (c <= 126)){
 		std::string tempLine = tBuffer.line(doccursor[1]);//str.erase (10,8);
 		tempLine+=keyAsChar;
-		cursor[0] = doccursor[0]+3;
 		tBuffer.writeLine(doccursor[1],tempLine);
+		cursor[0]+=1;
 	}
 
-	status = keyAsChar;
+	status = std::to_string(c);
 }
 
 void textCanvas::update( WINDOW * win ){
